@@ -1,0 +1,4 @@
+repository "Pateyto/Pateyto@18967034672654@cloud"
+  path "/"
+    br "/main"
+    co "/main"
