@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3b9ed690987849444b0fd2409a273c5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 167da9e0f9d0155488cb085a883204fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,4 +106,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BloodVisual
   isBackgroundSplash: 1
   isGroundSplat: 0
-  randomSprites: []
+  randomSprites:
+  - {fileID: 21300000, guid: 167da9e0f9d0155488cb085a883204fa, type: 3}
