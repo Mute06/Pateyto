@@ -186,11 +186,16 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
         {
             animator.SetBool("isCrouching", true);
             col.size = new Vector2(originalColliderSize.x, crouchColliderHeight);
+            
+            // Keep the bottom of the collider at the same local Y relative to the transform
+            float bottomY = originalColliderOffset.y - (originalColliderSize.y / 2f);
+            col.offset = new Vector2(originalColliderOffset.x, bottomY + (crouchColliderHeight / 2f));
         }
         else
         {
             animator.SetBool("isCrouching", false);
             col.size = originalColliderSize;
+            col.offset = originalColliderOffset;
         }
     }
 
