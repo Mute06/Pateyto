@@ -8,6 +8,12 @@ public class AIController : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;
 
+    [Header("Audio")]
+    public AudioSource audioSource;     // TEK Audio Source
+    public AudioClip patrolClip;
+    public AudioClip chaseClip;
+    public AudioClip hitClip;
+
     [Header("Movement")]
     public float startWaitTime = 4;
     public float timeToRotate = 2;
@@ -24,38 +30,47 @@ public class AIController : MonoBehaviour
     public Transform[] waypoints;
 
     int m_CurrentWaypointIndex;
-
     Vector3 m_PlayerPosition;
-    Vector3 playerLastPosition;
-
     float m_WaitTime;
     float m_TimeToRotate;
 
     bool m_PlayerInRange;
-    bool m_PlayerNear;
     bool m_IsPatrol;
     bool m_CaughtPlayer;
 
     Transform player;
 
-    void Start()
+    void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
+        // Eğer AudioSource inspector’dan atanmadıysa otomatik ekle
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+    }
+
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         m_IsPatrol = true;
         m_CaughtPlayer = false;
-        m_PlayerInRange = false;
 
         m_WaitTime = startWaitTime;
         m_TimeToRotate = timeToRotate;
 
         m_CurrentWaypointIndex = 0;
 
-        navMeshAgent.isStopped = false;
         navMeshAgent.speed = speedWalk;
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
+
+        PlayPatrolSound();
     }
 
     void Update()
@@ -69,7 +84,35 @@ public class AIController : MonoBehaviour
     }
 
     // ===============================
-    // DETECTION SYSTEM
+    // SOUND SYSTEM
+    // ===============================
+
+    void PlayPatrolSound()
+    {
+        if (audioSource.clip == patrolClip) return;
+
+        audioSource.loop = true;
+        audioSource.clip = patrolClip;
+        audioSource.Play();
+    }
+
+    void PlayChaseSound()
+    {
+        if (audioSource.clip == chaseClip) return;
+
+        audioSource.loop = true;
+        audioSource.clip = chaseClip;
+        audioSource.Play();
+    }
+
+    void PlayHitSound()
+    {
+        audioSource.loop = false;
+        audioSource.PlayOneShot(hitClip);
+    }
+
+    // ===============================
+    // DETECTION
     // ===============================
 
     void EnvironmentView()
@@ -97,6 +140,7 @@ public class AIController : MonoBehaviour
                     m_PlayerInRange = true;
                     m_IsPatrol = false;
                     m_PlayerPosition = target.position;
+                    PlayChaseSound();
                 }
             }
         }
@@ -104,6 +148,7 @@ public class AIController : MonoBehaviour
         if (!m_PlayerInRange && !m_CaughtPlayer)
         {
             m_IsPatrol = true;
+            PlayPatrolSound();
         }
     }
 
@@ -113,37 +158,20 @@ public class AIController : MonoBehaviour
 
     void Patrolling()
     {
-        if (m_PlayerNear)
+        navMeshAgent.speed = speedWalk;
+        navMeshAgent.SetDestination(
+            waypoints[m_CurrentWaypointIndex].position);
+
+        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            if (m_TimeToRotate <= 0)
+            if (m_WaitTime <= 0)
             {
-                Move(speedWalk);
-                LookingPlayer(playerLastPosition);
+                NextPoint();
+                m_WaitTime = startWaitTime;
             }
             else
             {
-                Stop();
-                m_TimeToRotate -= Time.deltaTime;
-            }
-        }
-        else
-        {
-            navMeshAgent.SetDestination(
-                waypoints[m_CurrentWaypointIndex].position);
-
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-            {
-                if (m_WaitTime <= 0)
-                {
-                    NextPoint();
-                    Move(speedWalk);
-                    m_WaitTime = startWaitTime;
-                }
-                else
-                {
-                    Stop();
-                    m_WaitTime -= Time.deltaTime;
-                }
+                m_WaitTime -= Time.deltaTime;
             }
         }
     }
@@ -153,97 +181,26 @@ public class AIController : MonoBehaviour
     // ===============================
 
     void Chasing()
+{
+    if (!m_CaughtPlayer)
     {
-        m_PlayerNear = false;
-        playerLastPosition = Vector3.zero;
-
-        if (!m_CaughtPlayer)
-        {
-            Move(speedRun);
-            navMeshAgent.SetDestination(m_PlayerPosition);
-        }
-
-        if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
-        {
-            if (Vector3.Distance(transform.position, player.position) <= 2.5f)
-            {
-                m_CaughtPlayer = true;
-                Stop();
-            }
-            else
-            {
-                m_IsPatrol = true;
-                m_WaitTime = startWaitTime;
-                m_TimeToRotate = timeToRotate;
-                navMeshAgent.SetDestination(
-                    waypoints[m_CurrentWaypointIndex].position);
-            }
-
-        }
+        navMeshAgent.speed = speedRun;
+        navMeshAgent.SetDestination(m_PlayerPosition);
 
         if (Vector3.Distance(transform.position, player.position) <= 2f)
-    {
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-    }
+        {
+            m_CaughtPlayer = true;
 
-    // ===============================
-    // MOVEMENT HELPERS
-    // ===============================
-
-    void Move(float speed)
-    {
-        navMeshAgent.isStopped = false;
-        navMeshAgent.speed = speed;
+            navMeshAgent.isStopped = true;   // Hareketi durdur
+            PlayHitSound();
+            P_SceneManager.Instance.ReloadLevelWithFade(3);
+        }
     }
-
-    void Stop()
-    {
-        navMeshAgent.isStopped = true;
-        navMeshAgent.speed = 0;
-    }
+}
 
     void NextPoint()
     {
         m_CurrentWaypointIndex =
             (m_CurrentWaypointIndex + 1) % waypoints.Length;
-
-        navMeshAgent.SetDestination(
-            waypoints[m_CurrentWaypointIndex].position);
-    }
-
-    void LookingPlayer(Vector3 player)
-    {
-        navMeshAgent.SetDestination(player);
-
-        if (Vector3.Distance(transform.position, player) <= 0.3f)
-        {
-            if (m_WaitTime <= 0)
-            {
-                m_PlayerNear = false;
-                Move(speedWalk);
-                navMeshAgent.SetDestination(
-                    waypoints[m_CurrentWaypointIndex].position);
-                m_WaitTime = startWaitTime;
-                m_TimeToRotate = timeToRotate;
-            }
-            else
-            {
-                Stop();
-                m_WaitTime -= Time.deltaTime;
-            }
-        }
-    }
-
-
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-{
-    if (hit.gameObject.CompareTag("Player"))
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-
-}
-

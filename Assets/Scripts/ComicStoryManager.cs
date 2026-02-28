@@ -140,19 +140,17 @@ public class ComicStoryManager : MonoBehaviour
     }
 
     void EndComic()
+{
+    Debug.Log("Çizgi roman hikayesi bitti!");
+
+    if (!string.IsNullOrEmpty(nextSceneName))
     {
-        Debug.Log("Çizgi roman hikayesi bitti!");
-        
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            Debug.Log("Geçilecek sahne: " + nextSceneName + ". Eğer burada hata alıyorsanız, sahneniz 'Build Settings' içindeki 'Scenes in Build' listesinde ekli değildir!");
-            // Belirtilen yeni sahneye geç
-            P_SceneManager.Instance.LoadNextLevel();
-        }
-        else
-        {
-            Debug.LogWarning("DİKKAT: Sonraki sahne girilmemiş! Inspector'da 'Next Scene' kısmına bir sahne sürüklediğinizden emin olun.");
-            gameObject.SetActive(false); 
-        }
+        SceneManager.LoadScene(nextSceneName);
     }
+    else
+    {
+        Debug.LogWarning("Next Scene boş!");
+    }
+}
+
 }
