@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlatformerMovement : MonoBehaviour
+public class PlatformerMovement : MonoBehaviour, IDamagable
 {
     [Header("Movement")]
     [SerializeField] private float maxSpeed = 5f;
@@ -233,5 +233,10 @@ public class PlatformerMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(ceilingCheck.position, ceilingCheckRadius);
         }
+    }
+
+    public void TakeDamage()
+    {
+        Destroy(gameObject);
     }
 }

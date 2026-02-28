@@ -14,8 +14,6 @@ public class Enemy_shooter : Platformer_EnemyBase
     [SerializeField] private LayerMask lineOfSightBlockLayer;
 
     private float shootCooldownTimer;
-    private float stopTimer;
-    private bool isStopped;
 
     protected override void Update()
     {
@@ -26,30 +24,8 @@ public class Enemy_shooter : Platformer_EnemyBase
         if (shootCooldownTimer > 0f)
             shootCooldownTimer -= Time.deltaTime;
 
-        if (isStopped)
-        {
-            stopTimer -= Time.deltaTime;
-            if (stopTimer <= 0f)
-                isStopped = false;
-        }
-
         if (shootCooldownTimer <= 0f && HasLineOfSight())
             Shoot();
-    }
-
-    protected override void HandleMovement()
-    {
-        if (isStopped)
-        {
-            // Decelerate to a stop while in shoot-pause
-            rb.linearVelocity = new Vector2(
-                Mathf.MoveTowards(rb.linearVelocity.x, 0f, moveSpeed),
-                rb.linearVelocity.y
-            );
-            return;
-        }
-
-        base.HandleMovement();
     }
 
     // Casts a horizontal ray from the fire point in the direction the enemy faces.
@@ -78,8 +54,7 @@ public class Enemy_shooter : Platformer_EnemyBase
             bulletRb.linearVelocity = (Vector2)transform.right * bulletSpeed;
 
         shootCooldownTimer = shootCooldown;
-        isStopped = true;
-        stopTimer = stopDuration;
+        PauseMovement(stopDuration);
     }
 
     private void OnDrawGizmosSelected()
@@ -90,4 +65,5 @@ public class Enemy_shooter : Platformer_EnemyBase
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(firePoint.position, transform.right * shootRange);
     }
+
 }

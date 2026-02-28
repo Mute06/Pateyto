@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5540535115526736601}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Platformer_EnemyBase
   maxHealth: 1
   moveSpeed: 3
-  jumpForce: 12
+  jumpForce: 10
   detectionRange: 10
   obstacleCheckRadius: 0.15
   groundCheck: {fileID: 2524140923522842672}
