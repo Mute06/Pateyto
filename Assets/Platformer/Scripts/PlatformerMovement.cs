@@ -15,42 +15,66 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private float fallGravityMultiplier = 2.5f;
     [SerializeField] private float jumpBufferTime = 0.2f;
 
+    [Header("Crouch")]
+    [SerializeField] private float crouchSpeedMultiplier = 0.4f;
+    [SerializeField] private float crouchColliderHeight = 0.5f;
+
     [Header("Ground Detection")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Ceiling Detection")]
+    [SerializeField] private Transform ceilingCheck;
+    [SerializeField] private float ceilingCheckRadius = 0.2f;
+
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference crouchAction;
 
     private Rigidbody2D rb;
+    private CapsuleCollider2D col;
     private float defaultGravityScale;
     private bool isGrounded;
+    private bool isCrouching;
     private bool isHoldingJump;
     private float jumpHoldTimer;
     private float jumpBufferTimer;
+    private Vector2 originalColliderSize;
+    private Vector2 originalColliderOffset;
+
+    public bool IsCrouching => isCrouching;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<CapsuleCollider2D>();
         defaultGravityScale = rb.gravityScale;
+        originalColliderSize = col.size;
+        originalColliderOffset = col.offset;
     }
 
     private void OnEnable()
     {
         moveAction.action.Enable();
         jumpAction.action.Enable();
+        crouchAction.action.Enable();
         jumpAction.action.started += OnJumpStarted;
         jumpAction.action.canceled += OnJumpCanceled;
+        crouchAction.action.started += OnCrouchStarted;
+        crouchAction.action.canceled += OnCrouchCanceled;
     }
 
     private void OnDisable()
     {
         moveAction.action.Disable();
         jumpAction.action.Disable();
+        crouchAction.action.Disable();
         jumpAction.action.started -= OnJumpStarted;
         jumpAction.action.canceled -= OnJumpCanceled;
+        crouchAction.action.started -= OnCrouchStarted;
+        crouchAction.action.canceled -= OnCrouchCanceled;
     }
 
     private void Update()
@@ -87,7 +111,8 @@ public class PlatformerMovement : MonoBehaviour
     private void HandleMovement()
     {
         float moveInput = moveAction.action.ReadValue<Vector2>().x;
-        float targetSpeed = moveInput * maxSpeed;
+        float speed = isCrouching ? maxSpeed * crouchSpeedMultiplier : maxSpeed;
+        float targetSpeed = moveInput * speed;
         float speedDiff = targetSpeed - rb.linearVelocity.x;
         float rate = Mathf.Abs(moveInput) > 0.01f ? acceleration : deceleration;
 
@@ -106,6 +131,42 @@ public class PlatformerMovement : MonoBehaviour
         jumpHoldTimer = 0f;
         jumpBufferTimer = 0f;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
+
+    private void SetCrouching(bool crouch)
+    {
+        if (isCrouching == crouch) return;
+
+        isCrouching = crouch;
+
+        if (crouch)
+        {
+            float heightDiff = originalColliderSize.y - crouchColliderHeight;
+            col.size = new Vector2(originalColliderSize.x, crouchColliderHeight);
+            col.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - heightDiff / 2f);
+        }
+        else
+        {
+            col.size = originalColliderSize;
+            col.offset = originalColliderOffset;
+        }
+    }
+
+    private bool HasCeilingAbove()
+    {
+        return Physics2D.OverlapCircle(ceilingCheck.position, ceilingCheckRadius, groundLayer);
+    }
+
+    private void OnCrouchStarted(InputAction.CallbackContext context)
+    {
+        SetCrouching(true);
+    }
+
+    private void OnCrouchCanceled(InputAction.CallbackContext context)
+    {
+        // Prevent standing up if there's a ceiling overhead
+        if (!HasCeilingAbove())
+            SetCrouching(false);
     }
 
     private void OnJumpStarted(InputAction.CallbackContext context)
@@ -132,8 +193,16 @@ public class PlatformerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (groundCheck == null) return;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
+
+        if (ceilingCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(ceilingCheck.position, ceilingCheckRadius);
+        }
     }
 }
