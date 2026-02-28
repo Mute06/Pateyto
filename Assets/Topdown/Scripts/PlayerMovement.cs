@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
 
     public bool canMove = true;
+    public bool restrictToRightOnly = false;
 
     private void Start()
     {
@@ -33,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             moveInput = moveAction.ReadValue<Vector2>();
+            
+            // Eğer kısıtlama varsa sadece sağ (X > 0) gitmesine izin ver
+            if (restrictToRightOnly) 
+            {
+                moveInput.y = 0f; // Yukarı(W) / Aşağı(S) engelle
+                if (moveInput.x < 0f) moveInput.x = 0f; // Sola(A) gitmeyi engelle
+            }
         }
         else
         {
