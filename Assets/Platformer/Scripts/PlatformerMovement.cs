@@ -42,6 +42,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
     private bool isGrounded;
     private bool isCrouching;
     private bool isMovementLocked;
+    public bool restrictToRightOnly = false;
     private bool isHoldingJump;
     private bool facingRight = true;
     private float jumpHoldTimer;
@@ -128,6 +129,11 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
         }
 
         float moveInput = moveAction.action.ReadValue<Vector2>().x;
+        
+        if (restrictToRightOnly && moveInput < 0f) 
+        {
+            moveInput = 0f;
+        }
 
         HandleFlip(moveInput);
 
@@ -162,7 +168,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
 
     private void ExecuteJump()
     {
-        if (isCrouching || isMovementLocked) return;
+        if (isCrouching || isMovementLocked || restrictToRightOnly) return;
 
         isHoldingJump = true;
         jumpHoldTimer = 0f;
@@ -195,6 +201,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
 
     private void OnCrouchStarted(InputAction.CallbackContext context)
     {
+        if (restrictToRightOnly) return;
         SetCrouching(true);
     }
 
@@ -206,7 +213,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
 
     private void OnJumpStarted(InputAction.CallbackContext context)
     {
-        if (isCrouching || isMovementLocked) return;
+        if (isCrouching || isMovementLocked || restrictToRightOnly) return;
 
         if (isGrounded)
         {
