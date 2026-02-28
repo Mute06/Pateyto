@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4590966367466320232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 8241670918955632026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.69, y: 0.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,13 +43,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 419019374493037935, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 460665911185341044, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1488963298873360038, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.56
+      value: 14.86
       objectReference: {fileID: 0}
     - target: {fileID: 1488963298873360038, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.09318
+      value: -5.02
       objectReference: {fileID: 0}
     - target: {fileID: 1488963298873360038, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_LocalPosition.z
@@ -83,17 +91,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3931379170776673365, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: fa9fba90b45df794281f80c3a524fcfd, type: 2}
+    - target: {fileID: 4620639108173678888, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -653418394, guid: 5d7863a2554bf484a8744bc9c3629c90, type: 3}
     - target: {fileID: 4620639108173678888, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_Color.b
-      value: 0.6301887
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4620639108173678888, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4620639108173678888, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
       propertyPath: m_Color.r
-      value: 0.38552734
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5581592897507904704, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5540535115526736601, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
@@ -145,10 +165,10 @@ MonoBehaviour:
   bulletSpeed: 10
   shootCooldown: 2
   stopDuration: 0.8
-  shootRange: 6
+  shootRange: 15
   lineOfSightBlockLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 448
 --- !u!4 &2865321934998001817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 264547863098082852, guid: c7cac1754a64a664185f728eb42e1a92, type: 3}
