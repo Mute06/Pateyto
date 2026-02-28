@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Platformer_EnemyBase : MonoBehaviour
+public class Platformer_EnemyBase : MonoBehaviour, IDamagable
 {
     [Header("Stats")]
     [SerializeField] protected float maxHealth = 3f;
@@ -24,6 +24,8 @@ public class Platformer_EnemyBase : MonoBehaviour
     protected bool isGrounded;
     protected bool facingRight = true;
     protected bool isDead;
+    protected bool isMovementPaused;
+    private float movementPauseTimer;
 
     protected virtual void Awake()
     {
@@ -35,11 +37,25 @@ public class Platformer_EnemyBase : MonoBehaviour
             player = playerObj.transform;
     }
 
+    /// <summary> Stops movement for the given duration. Call from subclasses after an action e.g. shooting. </summary>
+    public void PauseMovement(float duration)
+    {
+        isMovementPaused = true;
+        movementPauseTimer = duration;
+    }
+
     protected virtual void Update()
     {
         if (isDead) return;
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (isMovementPaused)
+        {
+            movementPauseTimer -= Time.deltaTime;
+            if (movementPauseTimer <= 0f)
+                isMovementPaused = false;
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -53,7 +69,6 @@ public class Platformer_EnemyBase : MonoBehaviour
         }
         else
         {
-            // Decelerate to a stop when out of detection range
             rb.linearVelocity = new Vector2(
                 Mathf.MoveTowards(rb.linearVelocity.x, 0f, moveSpeed),
                 rb.linearVelocity.y
@@ -64,15 +79,26 @@ public class Platformer_EnemyBase : MonoBehaviour
     protected virtual void HandleMovement()
     {
         float dirX = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(dirX * moveSpeed, rb.linearVelocity.y);
+
+        // Always face the player regardless of movement state
         HandleFlip(dirX);
+
+        if (isMovementPaused)
+        {
+            rb.linearVelocity = new Vector2(
+                Mathf.MoveTowards(rb.linearVelocity.x, 0f, moveSpeed),
+                rb.linearVelocity.y
+            );
+            return;
+        }
+
+        rb.linearVelocity = new Vector2(dirX * moveSpeed, rb.linearVelocity.y);
     }
 
     protected virtual void HandleObstacleJump()
     {
         if (!isGrounded || obstacleCheckPoint == null) return;
 
-        // obstacleCheckPoint is a child — it flips automatically with the Y rotation
         if (Physics2D.OverlapCircle(obstacleCheckPoint.position, obstacleCheckRadius, groundLayer))
             Jump();
     }
@@ -82,7 +108,7 @@ public class Platformer_EnemyBase : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
-    private void HandleFlip(float dirX)
+    protected void HandleFlip(float dirX)
     {
         if (dirX > 0f && !facingRight)
             Flip();
@@ -90,7 +116,7 @@ public class Platformer_EnemyBase : MonoBehaviour
             Flip();
     }
 
-    private void Flip()
+    protected void Flip()
     {
         facingRight = !facingRight;
         transform.eulerAngles = new Vector3(0f, facingRight ? 0f : 180f, 0f);
@@ -109,6 +135,10 @@ public class Platformer_EnemyBase : MonoBehaviour
     protected virtual void Die()
     {
         isDead = true;
+        if (BloodManager.Instance != null)
+        {
+            BloodManager.Instance.SpawnBloodEffects(transform.position, Vector3.zero);
+        }
         Destroy(gameObject);
     }
 
@@ -128,5 +158,10 @@ public class Platformer_EnemyBase : MonoBehaviour
 
         Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    public void TakeDamage()
+    {
+        Die();
     }
 }
