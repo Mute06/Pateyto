@@ -75,6 +75,9 @@ public class PlatformerShooter : MonoBehaviour
         if (isReloading || fireCooldown > 0f || currentBullets <= 0) return;
 
         Transform firePoint = movement.GetIsCrouching() ? downFirePoint : upFirePoint;
+        if (firePoint == null) firePoint = upFirePoint; // Default to upFirePoint if downFirePoint is unassigned
+        
+        if (firePoint == null) return; // Failsafe if neither is assigned
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 

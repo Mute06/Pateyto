@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7eb89b56dff80f42b6e53364618e5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JigsawPuzzleGame
-  puzzleTexture: {fileID: 2800000, guid: 03fafe9e9f367154aabdb1f24819476d, type: 3}
+  puzzleTexture: {fileID: 2800000, guid: da0bd13da6b03ce4d9938f2764deb740, type: 3}
   difficulty: 2
   snapDifficulty: 1.2
   screenCoverage: 0.84
