@@ -31,7 +31,10 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference crouchAction;
-            
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip dieSoundClip;
+
     private Rigidbody2D rb;
     private Animator animator;
     private CapsuleCollider2D col;
@@ -242,5 +245,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
             BloodManager.Instance.SpawnBloodEffects(transform.position, Vector3.zero);
         }
         Destroy(gameObject);
+        P_AudioPlayer.Instance.PlaySFX(dieSoundClip);
+        Platform_SceneManager.Instance.RealoadAfter(0.75f);
     }
 }
