@@ -219,32 +219,37 @@ namespace FirstPersonSystem
 
         private void HandleStamina()
         {
-            if (IsSprinting && CurrentInput != Vector2.zero)
+            if (IsSprinting && CurrentInput != Vector2.zero && currentStamina > 0)
             {
-                if (regeneratingStamina != null)
-                {
-                    StopCoroutine(regeneratingStamina);
-                    regeneratingStamina = null;
-                }
-
                 currentStamina -= stamineUseMultipleir * Time.deltaTime;
 
-                if (currentStamina < 0f)
+                if (currentStamina <= 0f)
                 {
                     currentStamina = 0f;
+                    canSprint = false;
                 }
 
                 OnStaminaChange?.Invoke(currentStamina / maxStamina);
-
-                if (currentStamina <= 0)
-                {
-                    canSprint = false;
-                }
             }
-
-            if (!IsSprinting && currentStamina < maxStamina && regeneratingStamina == null)
+            else
             {
-                regeneratingStamina = StartCoroutine(RegenerateStamina());
+                // Sprint etmiyorsa veya stamina bittiyse otomatik dolsun
+                if (currentStamina < maxStamina)
+                {
+                    currentStamina += staminaValueIncrement * Time.deltaTime;
+
+                    if (currentStamina >= maxStamina)
+                    {
+                        currentStamina = maxStamina;
+                    }
+
+                    if (currentStamina > 10f) // küçük buffer
+                    {
+                        canSprint = true;
+                    }
+
+                    OnStaminaChange?.Invoke(currentStamina / maxStamina);
+                }
             }
         }
 
