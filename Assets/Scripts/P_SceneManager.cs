@@ -85,6 +85,11 @@ public class P_SceneManager : MonoBehaviour
             Debug.LogWarning($"P_SceneManager: Scene index {index} is out of range to fade into.");
     }
 
+    public void ReloadLevelWithFade(float duration)
+    {
+        StartCoroutine(FadeAndLoadRoutine(SceneManager.GetActiveScene().buildIndex, duration));
+    }
+
     // ── Coroutines ───────────────────────────────────────────────
 
     private IEnumerator LoadNextLevelRoutine(float delay)
