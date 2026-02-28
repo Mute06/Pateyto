@@ -166,4 +166,14 @@ public class Platformer_EnemyBase : MonoBehaviour, IDamagable
     {
         Die();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isDead && collision != null && collision.gameObject.CompareTag("Player"))
+        {
+            
+            collision.gameObject.TryGetComponent(out IDamagable playerDamageable);
+            playerDamageable?.TakeDamage();
+        }
+    }
 }
