@@ -26,6 +26,12 @@ public class CameraShake : MonoBehaviour
         if (cinemachineCamera != null)
         {
             cinemachineBasicMultiChannelPerlin = cinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+            
+            // Fix: reset amplitude gain to 0 at start so it doesn't shake indefinitely if the component's default is > 0
+            if (cinemachineBasicMultiChannelPerlin != null)
+            {
+                cinemachineBasicMultiChannelPerlin.AmplitudeGain = 0f;
+            }
         }
     }
 

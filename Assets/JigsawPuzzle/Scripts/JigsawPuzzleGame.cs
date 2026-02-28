@@ -21,6 +21,10 @@ public class JigsawPuzzleGame : MonoBehaviour
     [Range(1f, 10f)]
     [SerializeField] private float snapDifficulty = 2f;
 
+    [Tooltip("How much of the screen the assembled puzzle should fill. Higher = bigger pieces.")]
+    [Range(0.2f, 1f)]
+    [SerializeField] private float screenCoverage = 0.6f;
+
     [Header("References")]
     [SerializeField] private Transform gameHolder;
     [SerializeField] private Transform piecePrefab;
@@ -321,9 +325,9 @@ public class JigsawPuzzleGame : MonoBehaviour
         float totalW = pieceWidth  * dimensions.x;
         float totalH = pieceHeight * dimensions.y;
 
-        // We want the puzzle to fill ~40 % of the screen so there is scatter room
-        float neededH = totalH / 0.4f;
-        float neededW = totalW / 0.4f;
+        // Use screenCoverage to determine camera scale
+        float neededH = totalH / screenCoverage;
+        float neededW = totalW / screenCoverage;
         float orthoForW = neededW / (2f * cam.aspect);
         float orthoForH = neededH / 2f;
 
