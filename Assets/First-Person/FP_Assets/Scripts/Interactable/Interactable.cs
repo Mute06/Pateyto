@@ -6,7 +6,7 @@ namespace FirstPersonSystem
     {
         public virtual void Awake()
         {
-            gameObject.layer = 8; // Interactable layer
+            //gameObject.layer = 8; // Interactable layer
         }
         public abstract void OnInteractStart(FirstPersonController player);
         public abstract void OnFocus();
