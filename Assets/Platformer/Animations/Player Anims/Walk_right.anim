@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Door_opened
+  m_Name: Walk_right
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 983092566, guid: a80fa675d90aa6745b53d25e09722049, type: 3}
+      value: {fileID: 21300000, guid: bf4f4c4b0fb2cde4b80ec2e14bf8da7e, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300000, guid: fad20dbc18afdc043a774e562abaf26f, type: 3}
+    - time: 0.35
+      value: {fileID: 21300000, guid: 78ac97e4718821c4b899b508726180d8, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: e2cd0fa4e0153bb41ac4de7dcee43154, type: 3}
+    - time: 0.6666667
+      value: {fileID: 21300000, guid: f63ffe567d67a204081ec1a08074482a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,13 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 983092566, guid: a80fa675d90aa6745b53d25e09722049, type: 3}
+    - {fileID: 21300000, guid: bf4f4c4b0fb2cde4b80ec2e14bf8da7e, type: 3}
+    - {fileID: 21300000, guid: fad20dbc18afdc043a774e562abaf26f, type: 3}
+    - {fileID: 21300000, guid: 78ac97e4718821c4b899b508726180d8, type: 3}
+    - {fileID: 21300000, guid: e2cd0fa4e0153bb41ac4de7dcee43154, type: 3}
+    - {fileID: 21300000, guid: f63ffe567d67a204081ec1a08074482a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.016666668
+    m_StopTime: 0.68333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
