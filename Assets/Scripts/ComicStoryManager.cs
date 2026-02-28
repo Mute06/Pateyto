@@ -147,7 +147,7 @@ public class ComicStoryManager : MonoBehaviour
         {
             Debug.Log("Geçilecek sahne: " + nextSceneName + ". Eğer burada hata alıyorsanız, sahneniz 'Build Settings' içindeki 'Scenes in Build' listesinde ekli değildir!");
             // Belirtilen yeni sahneye geç
-            SceneManager.LoadScene(nextSceneName);
+            P_SceneManager.Instance.LoadNextLevel();
         }
         else
         {
