@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     InputAction moveAction;
     private Animator animator;
 
+    public bool canMove = true;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,14 +30,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
-        moveInput = moveAction.ReadValue<Vector2>();
-   
+        if (canMove)
+        {
+            moveInput = moveAction.ReadValue<Vector2>();
+        }
+        else
+        {
+            moveInput = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = moveInput * moveSpeed;
+        if (canMove)
+        {
+            rb.linearVelocity = moveInput * moveSpeed;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     private void OnMoveStarted(InputAction.CallbackContext context)
