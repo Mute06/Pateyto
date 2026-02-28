@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Level2_Puzzle.unity
     guid: d169f1980bb551a4bad25b294caa9439
   - enabled: 1
-    path: Assets/Scenes/StoryScene.unity
+    path: Assets/Scenes/BeforePlatfom.unity
     guid: 920e574d66b78534bbedb4d6b1de88d1
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: fc963e0778b707a40bff8ca0eec2cd04, type: 2}
