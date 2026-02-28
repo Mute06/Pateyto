@@ -58,7 +58,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,6 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375181097863037468}
   - component: {fileID: 2330416549641457975}
+  - component: {fileID: 8939999214290107922}
   m_Layer: 0
   m_Name: PuzzleCamera
   m_TagString: MainCamera
@@ -225,6 +226,50 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &8939999214290107922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381037901386676525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &8831808900106912339
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,13 +316,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7eb89b56dff80f42b6e53364618e5ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JigsawPuzzleGame
-  puzzleTexture: {fileID: 0}
-  difficulty: 4
-  snapDifficulty: 2
+  puzzleTexture: {fileID: 2800000, guid: 03fafe9e9f367154aabdb1f24819476d, type: 3}
+  difficulty: 2
+  snapDifficulty: 1.2
+  screenCoverage: 0.84
   gameHolder: {fileID: 1037831839237029341}
   piecePrefab: {fileID: 6138575279070720949, guid: 275a60b484f4f8343beb9ec1d0ad1f64, type: 3}
   puzzleCamera: {fileID: 2330416549641457975}
-  borderThickness: 0.08
+  borderThickness: 0.069
   OnPuzzleComplete:
     m_PersistentCalls:
       m_Calls: []
