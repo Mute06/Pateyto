@@ -16,7 +16,6 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private float jumpBufferTime = 0.2f;
 
     [Header("Crouch")]
-    [SerializeField] private float crouchSpeedMultiplier = 0.4f;
     [SerializeField] private float crouchColliderHeight = 0.5f;
 
     [Header("Ground Detection")]
@@ -32,24 +31,31 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference crouchAction;
-
+            
     private Rigidbody2D rb;
+    private Animator animator;
     private CapsuleCollider2D col;
     private float defaultGravityScale;
     private bool isGrounded;
     private bool isCrouching;
+    private bool isMovementLocked;
     private bool isHoldingJump;
+    private bool facingRight = true;
     private float jumpHoldTimer;
     private float jumpBufferTimer;
     private Vector2 originalColliderSize;
     private Vector2 originalColliderOffset;
 
-    public bool IsCrouching => isCrouching;
+    public bool GetIsCrouching() => isCrouching;
+
+    /// <summary> Locks all movement and jumping. Used externally e.g. during reload. </summary>
+    public void SetMovementLocked(bool locked) => isMovementLocked = locked;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        animator = GetComponent<Animator>();
         defaultGravityScale = rb.gravityScale;
         originalColliderSize = col.size;
         originalColliderOffset = col.offset;
@@ -110,13 +116,36 @@ public class PlatformerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
+        // Bring the player to a full stop while crouching or movement is locked
+        if (isCrouching || isMovementLocked)
+        {
+            rb.AddForce(Vector2.right * (-rb.linearVelocity.x * deceleration));
+            return;
+        }
+
         float moveInput = moveAction.action.ReadValue<Vector2>().x;
-        float speed = isCrouching ? maxSpeed * crouchSpeedMultiplier : maxSpeed;
-        float targetSpeed = moveInput * speed;
+
+        HandleFlip(moveInput);
+
+        float targetSpeed = moveInput * maxSpeed;
         float speedDiff = targetSpeed - rb.linearVelocity.x;
         float rate = Mathf.Abs(moveInput) > 0.01f ? acceleration : deceleration;
 
         rb.AddForce(Vector2.right * (speedDiff * rate));
+    }
+
+    private void HandleFlip(float moveInput)
+    {
+        if (moveInput > 0f && !facingRight)
+            Flip();
+        else if (moveInput < 0f && facingRight)
+            Flip();
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.eulerAngles = new Vector3(0f, facingRight ? 0f : 180f, 0f);
     }
 
     private void HandleJumpHold()
@@ -127,6 +156,8 @@ public class PlatformerMovement : MonoBehaviour
 
     private void ExecuteJump()
     {
+        if (isCrouching || isMovementLocked) return;
+
         isHoldingJump = true;
         jumpHoldTimer = 0f;
         jumpBufferTimer = 0f;
@@ -141,14 +172,13 @@ public class PlatformerMovement : MonoBehaviour
 
         if (crouch)
         {
-            float heightDiff = originalColliderSize.y - crouchColliderHeight;
+            animator.SetBool("isCrouching", true);
             col.size = new Vector2(originalColliderSize.x, crouchColliderHeight);
-            col.offset = new Vector2(originalColliderOffset.x, originalColliderOffset.y - heightDiff / 2f);
         }
         else
         {
+            animator.SetBool("isCrouching", false);
             col.size = originalColliderSize;
-            col.offset = originalColliderOffset;
         }
     }
 
@@ -164,20 +194,20 @@ public class PlatformerMovement : MonoBehaviour
 
     private void OnCrouchCanceled(InputAction.CallbackContext context)
     {
-        // Prevent standing up if there's a ceiling overhead
         if (!HasCeilingAbove())
             SetCrouching(false);
     }
 
     private void OnJumpStarted(InputAction.CallbackContext context)
     {
+        if (isCrouching || isMovementLocked) return;
+
         if (isGrounded)
         {
             ExecuteJump();
             return;
         }
 
-        // Store the input for when the player lands
         jumpBufferTimer = jumpBufferTime;
     }
 
@@ -186,7 +216,6 @@ public class PlatformerMovement : MonoBehaviour
         isHoldingJump = false;
         jumpBufferTimer = 0f;
 
-        // Cut jump short if released early while ascending
         if (rb.linearVelocity.y > 0f)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
     }
