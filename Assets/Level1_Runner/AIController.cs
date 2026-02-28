@@ -193,15 +193,10 @@ public class AIController : MonoBehaviour
 
             navMeshAgent.isStopped = true;   // Hareketi durdur
             PlayHitSound();
-            Invoke("ReloadScene", 3f);
+            P_SceneManager.Instance.ReloadLevelWithFade(3);
         }
     }
 }
-
-    void ReloadScene()
-    {
-        P_SceneManager.Instance.ReloadLevelWithFade(2);
-    }
 
     void NextPoint()
     {
