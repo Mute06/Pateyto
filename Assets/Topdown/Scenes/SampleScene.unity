@@ -7431,7 +7431,6 @@ GameObject:
   - component: {fileID: 471465895}
   - component: {fileID: 471465896}
   - component: {fileID: 471465898}
-  - component: {fileID: 471465897}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -7470,19 +7469,6 @@ MonoBehaviour:
   stringToType: What is happening?!..
   typingSpeed: 0.05
   playOnAwake: 1
---- !u!114 &471465897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471465894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 673c761d91edb34479c82cca8b206ca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleFade
-  fadeSpeed: 6
 --- !u!225 &471465898
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8145,7 +8131,7 @@ Transform:
   m_GameObject: {fileID: 742486822}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0027186368, w: 0.99999636}
-  m_LocalPosition: {x: -0.197155, y: -0.13814986, z: 0}
+  m_LocalPosition: {x: -0.18759537, y: -0.36789072, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8231,7 +8217,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!70 &742486826
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -8266,8 +8252,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0000002151818, y: -0.18125024}
-  m_Size: {x: 0.31925932, y: 0.26250285}
+  m_Offset: {x: -0.00000019459027, y: 0.11874975}
+  m_Size: {x: 0.66250294, y: 0.2625029}
   m_Direction: 1
 --- !u!1001 &771116979
 PrefabInstance:
@@ -11118,7 +11104,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1394448927
 Transform:
   m_ObjectHideFlags: 0
@@ -11516,13 +11502,53 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        name: beray
-        icon: {fileID: -732541826, guid: d4df001b9b2e24c4aad2ee8d7b6e3290, type: 3}
-      line: seaaaa
-    - character:
-        name: dsadsa
+        name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: vdsvdsvsds
+      line: You received our letter.
+    - character:
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: You knew what happened.
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: Grief is loud. We hear it.
+    - character:
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: You can bring them back.
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: We can return what was taken.
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: ..........
+    - character:
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: "Then why me? Why don\u2019t you take it yourselves?"
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: Lumenwood forbids us.
+    - character:
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: The forest rejects our kind.
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: It answers only to the living.
+    - character:
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: And if I refuse?
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: Then they remain as they are.
   triggerOnEnter: 0
 --- !u!114 &1504234061
 MonoBehaviour:
@@ -12764,7 +12790,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1801987040
 Transform:
   m_ObjectHideFlags: 0
@@ -12950,7 +12976,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1853353169
 Transform:
   m_ObjectHideFlags: 0
@@ -13556,7 +13582,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1999534009
 Transform:
   m_ObjectHideFlags: 0
@@ -13779,6 +13805,7 @@ GameObject:
   - component: {fileID: 2080556690}
   - component: {fileID: 2080556689}
   - component: {fileID: 2080556688}
+  - component: {fileID: 2080556691}
   m_Layer: 0
   m_Name: Square (3)
   m_TagString: Untagged
@@ -13906,6 +13933,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 167966598}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0.312}
+--- !u!114 &2080556691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080556687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d25dcf8f26257274787a04678c09541e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeactivateOnTrigger
+  targetTag: Player
+  objectToDeactivate: {fileID: 353875949}
+  delay: 0
 --- !u!1 &2112756965
 GameObject:
   m_ObjectHideFlags: 0
