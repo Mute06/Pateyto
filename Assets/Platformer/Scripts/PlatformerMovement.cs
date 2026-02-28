@@ -36,7 +36,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
     [SerializeField] private AudioClip dieSoundClip;
 
     private Rigidbody2D rb;
-    private Animator animator;
+    [SerializeField] private Animator animator;
     private CapsuleCollider2D col;
     private float defaultGravityScale;
     private bool isGrounded;
@@ -58,7 +58,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         defaultGravityScale = rb.gravityScale;
         originalColliderSize = col.size;
         originalColliderOffset = col.offset;
@@ -123,6 +123,7 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
         if (isCrouching || isMovementLocked)
         {
             rb.AddForce(Vector2.right * (-rb.linearVelocity.x * deceleration));
+            animator.SetFloat("Speed", 0f);
             return;
         }
 
@@ -135,6 +136,8 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
         float rate = Mathf.Abs(moveInput) > 0.01f ? acceleration : deceleration;
 
         rb.AddForce(Vector2.right * (speedDiff * rate));
+
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
     }
 
     private void HandleFlip(float moveInput)
