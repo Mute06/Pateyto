@@ -20,6 +20,7 @@ public class Platformer_EnemyBase : MonoBehaviour, IDamagable
 
     protected Rigidbody2D rb;
     protected Transform player;
+    private Animator animator;
     protected float currentHealth;
     protected bool isGrounded;
     protected bool facingRight = true;
@@ -30,6 +31,7 @@ public class Platformer_EnemyBase : MonoBehaviour, IDamagable
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -163,5 +165,15 @@ public class Platformer_EnemyBase : MonoBehaviour, IDamagable
     public void TakeDamage()
     {
         Die();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isDead && collision != null && collision.gameObject.CompareTag("Player"))
+        {
+            
+            collision.gameObject.TryGetComponent(out IDamagable playerDamageable);
+            playerDamageable?.TakeDamage();
+        }
     }
 }
