@@ -237,6 +237,10 @@ public class PlatformerMovement : MonoBehaviour, IDamagable
 
     public void TakeDamage()
     {
+        if (BloodManager.Instance != null)
+        {
+            BloodManager.Instance.SpawnBloodEffects(transform.position, Vector3.zero);
+        }
         Destroy(gameObject);
     }
 }

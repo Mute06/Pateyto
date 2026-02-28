@@ -135,6 +135,10 @@ public class Platformer_EnemyBase : MonoBehaviour, IDamagable
     protected virtual void Die()
     {
         isDead = true;
+        if (BloodManager.Instance != null)
+        {
+            BloodManager.Instance.SpawnBloodEffects(transform.position, Vector3.zero);
+        }
         Destroy(gameObject);
     }
 

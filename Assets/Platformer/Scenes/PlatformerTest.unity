@@ -778,6 +778,53 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1522276987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522276989}
+  - component: {fileID: 1522276988}
+  m_Layer: 0
+  m_Name: BloodManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1522276988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522276987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a763793a0964a654e9af52fe5bc69c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloodManager
+  bloodParticlePrefab: {fileID: 7992284442369185278, guid: 1667225884c5ece4ab8f5bcb761509d4, type: 3}
+  groundSplatterPrefab: {fileID: 2030789987375456173, guid: 743a6a3837097b6409d23a16c9c4ee8a, type: 3}
+  backgroundSplashPrefab: {fileID: 753425631242152938, guid: 994e0006d5f014e41ac7d35fe85d8408, type: 3}
+--- !u!4 &1522276989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522276987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1684312002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,7 +1229,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.06337483, g: 0.0673514, b: 0.08679241, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1445,3 +1492,4 @@ SceneRoots:
   - {fileID: 510210496}
   - {fileID: 45416310}
   - {fileID: 1929116541}
+  - {fileID: 1522276989}
