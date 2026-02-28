@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlatformerMovement : MonoBehaviour
+public class PlatformerMovement : MonoBehaviour, IDamagable
 {
     [Header("Movement")]
     [SerializeField] private float maxSpeed = 5f;
@@ -31,9 +31,12 @@ public class PlatformerMovement : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference crouchAction;
-            
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip dieSoundClip;
+
     private Rigidbody2D rb;
-    private Animator animator;
+    [SerializeField] private Animator animator;
     private CapsuleCollider2D col;
     private float defaultGravityScale;
     private bool isGrounded;
@@ -55,7 +58,7 @@ public class PlatformerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         defaultGravityScale = rb.gravityScale;
         originalColliderSize = col.size;
         originalColliderOffset = col.offset;
@@ -120,6 +123,7 @@ public class PlatformerMovement : MonoBehaviour
         if (isCrouching || isMovementLocked)
         {
             rb.AddForce(Vector2.right * (-rb.linearVelocity.x * deceleration));
+            animator.SetFloat("Speed", 0f);
             return;
         }
 
@@ -132,6 +136,8 @@ public class PlatformerMovement : MonoBehaviour
         float rate = Mathf.Abs(moveInput) > 0.01f ? acceleration : deceleration;
 
         rb.AddForce(Vector2.right * (speedDiff * rate));
+
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
     }
 
     private void HandleFlip(float moveInput)
@@ -233,5 +239,16 @@ public class PlatformerMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(ceilingCheck.position, ceilingCheckRadius);
         }
+    }
+
+    public void TakeDamage()
+    {
+        if (BloodManager.Instance != null)
+        {
+            BloodManager.Instance.SpawnBloodEffects(transform.position, Vector3.zero);
+        }
+        Destroy(gameObject);
+        P_AudioPlayer.Instance.PlaySFX(dieSoundClip);
+        Platform_SceneManager.Instance.RealoadAfter(0.75f);
     }
 }

@@ -180,3 +180,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletDie
   lifeTime: 10
+  bulleftHitEffect: {fileID: 358559891283342208, guid: 5f200cd2d4bcd0e4fbb93045f028f7c8, type: 3}

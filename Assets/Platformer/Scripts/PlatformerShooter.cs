@@ -25,6 +25,14 @@ public class PlatformerShooter : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlatformerMovement movement;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] shootClips;
+    [SerializeField] private AudioClip reloadClip;
+
+
+
+
+    private AudioSource gunSound;
     private int currentBullets;
     private float fireCooldown;
     private bool isReloading;
@@ -37,6 +45,7 @@ public class PlatformerShooter : MonoBehaviour
     private void Awake()
     {
         currentBullets = maxBullets;
+        gunSound = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -74,12 +83,15 @@ public class PlatformerShooter : MonoBehaviour
 
         currentBullets--;
         fireCooldown = fireRate;
+
+        PlayShootSound();
     }
 
     private void OnReload(InputAction.CallbackContext context)
     {
         if (isReloading || currentBullets == maxBullets) return;
 
+        gunSound.PlayOneShot(reloadClip);
         reloadCoroutine = StartCoroutine(ReloadCoroutine());
     }
 
@@ -93,5 +105,12 @@ public class PlatformerShooter : MonoBehaviour
         currentBullets = maxBullets;
         isReloading = false;
         movement.SetMovementLocked(false);
+    }
+
+    private void PlayShootSound()
+    {
+        int randshoot = Random.Range(0, shootClips.Length); 
+        gunSound.PlayOneShot(shootClips[randshoot]);
+        CameraShake.Instance.ShakeCamera(5f, 0.1f);
     }
 }
