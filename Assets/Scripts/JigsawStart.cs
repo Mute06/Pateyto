@@ -1,25 +1,30 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class JigsawStart : MonoBehaviour
 {
     [SerializeField] private GameObject jigSawPrefab;
-    public UnityEvent onPuzzleComplete;
 
     private JigsawPuzzleGame currentPuzzle;
-    private GameObject currentjigsaw;
+    private GameObject currentJigsaw;
+    private bool puzzleStarted = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !puzzleStarted)
         {
-            currentjigsaw = Instantiate(jigSawPrefab);
-            currentPuzzle = currentjigsaw.GetComponent<JigsawPuzzleGame>();
-            onPuzzleComplete.AddListener(() =>
-            {
-                Destroy(currentjigsaw);
-                P_SceneManager.Instance.LoadNextLevelWithFade(1f);
-            });
-            currentPuzzle.OnPuzzleComplete = onPuzzleComplete;
-        }   
+            puzzleStarted = true;
+
+            currentJigsaw = Instantiate(jigSawPrefab);
+
+            currentPuzzle = currentJigsaw.GetComponent<JigsawPuzzleGame>();
+
+            currentPuzzle.OnPuzzleComplete.AddListener(PuzzleFinished);
+        }
+    }
+
+    private void PuzzleFinished()
+    {
+        Destroy(currentJigsaw);
+        P_SceneManager.Instance.LoadNextLevelWithFade(1f);
     }
 }
