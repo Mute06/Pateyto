@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class P_AudioPlayer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class P_AudioPlayer : MonoBehaviour
     [Header("Music")]
     [SerializeField] private AudioClip musicClip;
     [SerializeField][Range(0f, 1f)] private float musicVolume = 0.5f;
+
+    public AudioMixerGroup AudioMixer;
 
     private AudioSource sfxSource;
     private AudioSource musicSource;
@@ -27,6 +30,8 @@ public class P_AudioPlayer : MonoBehaviour
 
         sfxSource = gameObject.AddComponent<AudioSource>();
         musicSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.outputAudioMixerGroup = AudioMixer;
+        musicSource.outputAudioMixerGroup = AudioMixer;
 
         musicSource.loop = true;
         musicSource.volume = musicVolume;

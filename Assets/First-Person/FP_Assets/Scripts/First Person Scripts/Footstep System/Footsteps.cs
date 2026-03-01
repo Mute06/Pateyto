@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FirstPersonSystem
@@ -10,7 +8,6 @@ namespace FirstPersonSystem
         [SerializeField] private bool useFootsteps = true;
 
         public GroundType defaultGroundType;
-        public GroundType[] groundTypes;
         [SerializeField] private float baseStepSpeed = 0.5f;
         [SerializeField] private float crouchStepMultipleir = 1.5f;
         [SerializeField] private float sprintStepMultipleir = 0.6f;
@@ -20,15 +17,11 @@ namespace FirstPersonSystem
         private float footstepTimer = 0f;
         private float GetCurrentOffset => _controller.IsCrouching ? baseStepSpeed * crouchStepMultipleir : _controller.IsSprinting ? baseStepSpeed * sprintStepMultipleir : baseStepSpeed;
         private FirstPersonController _controller;
-        private CheckTerrainTexture terrainTextureChecker;
         private AudioClip previousClip;
-
-        const string terrainTag = "Terrain";
 
         private void Start()
         {
             _controller = GetComponent<FirstPersonController>();
-            terrainTextureChecker = GetComponent<CheckTerrainTexture>();
         }
 
         private void Update()
@@ -46,47 +39,21 @@ namespace FirstPersonSystem
 
             if (footstepTimer <= 0f)
             {
-                if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 3f))
-                {
-
-                    bool didFound = false;
-                    if (hit.collider.tag == terrainTag)
-                    {
-                        HandleTerrain();
-                        didFound = true;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < groundTypes.Length; i++)
-                        {
-                            if (groundTypes[i].groundTag == hit.collider.tag)
-                            {
-                                PlaySoundWithRandomPitch(GetClipFromArray(groundTypes[i].walkAudioClips));
-                                didFound = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!didFound)
-                    {
-                        PlaySoundWithRandomPitch(GetClipFromArray(defaultGroundType.walkAudioClips));
-                    }
-
-                }
-
+                PlaySoundWithRandomPitch(GetClipFromArray(defaultGroundType.walkAudioClips));
                 footstepTimer = GetCurrentOffset;
             }
         }
 
         private AudioClip GetClipFromArray(AudioClip[] clipArray)
         {
+            if (clipArray == null || clipArray.Length == 0) return null;
+
             int attemps = 3;
-            AudioClip selectedClip = clipArray[Random.Range(0, clipArray.Length - 1)];
+            AudioClip selectedClip = clipArray[Random.Range(0, clipArray.Length)];
 
             while (selectedClip == previousClip && attemps > 0)
             {
-                selectedClip = clipArray[Random.Range(0, clipArray.Length - 1)];
+                selectedClip = clipArray[Random.Range(0, clipArray.Length)];
                 attemps--;
             }
 
@@ -96,32 +63,9 @@ namespace FirstPersonSystem
 
         private void PlaySoundWithRandomPitch(AudioClip clip)
         {
+            if (clip == null) return;
             footstepAudioSource.pitch = Random.Range(minPitch, maxPitch);
             footstepAudioSource.PlayOneShot(clip);
-        }
-        private void PlaySoundWithRandomPitch(AudioClip clip, float volume)
-        {
-            footstepAudioSource.pitch = Random.Range(minPitch, maxPitch);
-            footstepAudioSource.PlayOneShot(clip, volume);
-        }
-        private void PlaySoundNormal(AudioClip clip)
-        {
-            footstepAudioSource.pitch = 1f;
-            footstepAudioSource.PlayOneShot(clip);
-        }
-
-        private void HandleTerrain()
-        {
-            terrainTextureChecker.GetTerrainTexture();
-
-
-            foreach (var item in groundTypes)
-            {
-                if (terrainTextureChecker.textureValues[item.indexOfTerrainTexture] > 0)
-                {
-                    PlaySoundWithRandomPitch(GetClipFromArray(item.walkAudioClips), terrainTextureChecker.textureValues[item.indexOfTerrainTexture]);
-                }
-            }
         }
     }
 }

@@ -8,7 +8,7 @@ public class ComicStoryManager : MonoBehaviour
 {
     [Header("Story Panels")]
     public Image[] comicPanels; // Çizgi roman paneli UI objeleri
-    
+
     [Header("Fade to Black (Son Panel Sonrası)")]
     public Image fadeOverlay; // Tam ekran siyah Image
     public TextMeshProUGUI dreamText; // "…I wish it was just a dream." yazısı
@@ -18,22 +18,17 @@ public class ComicStoryManager : MonoBehaviour
     [TextArea]
     public string dreamMessage = "\u2026I wish it was just a dream.";
 
-    [Header("Settings")]
-#if UNITY_EDITOR
-    [Tooltip("Çizgi roman bitince yüklenecek sahneyi buraya sürükleyin")]
-    public UnityEditor.SceneAsset nextScene; // Sahneyi doğrudan sürükleyip bırakmak için
-#endif
     [HideInInspector]
-    public string nextSceneName; 
-    public bool autoPlay = false; 
-    public float timePerPanel = 3f; 
-    public float fadeDuration = 0.5f; 
-    
+    public string nextSceneName;
+    public bool autoPlay = false;
+    public float timePerPanel = 3f;
+    public float fadeDuration = 0.5f;
+
     [Header("Panel Sounds")]
-    public AudioSource audioSource; 
+    public AudioSource audioSource;
     public AudioClip[] panelSounds;
 
-    
+
     private int currentPanelIndex = 0;
     private float timer = 0f;
     private bool isFading = false;
@@ -41,14 +36,6 @@ public class ComicStoryManager : MonoBehaviour
 
     void Start()
     {
-#if UNITY_EDITOR
-        if (nextScene != null)
-        {
-            // SceneAsset nesnesinin barındırdığı asıl adı kesin olarak alıp kaydederiz
-            nextSceneName = nextScene.name;
-            Debug.Log("Scene Asset algılandı: " + nextSceneName);
-        }
-#endif
 
         // Tüm panelleri başlangıçta tamamen şeffaf (görünmez) yap
         foreach (Image panel in comicPanels)
@@ -81,7 +68,7 @@ public class ComicStoryManager : MonoBehaviour
         if (dreamSequenceStarted) return;
 
         // Bütün paneller gösterildi mi?
-        if (currentPanelIndex >= comicPanels.Length) 
+        if (currentPanelIndex >= comicPanels.Length)
         {
             if (autoPlay)
             {
@@ -130,7 +117,7 @@ public class ComicStoryManager : MonoBehaviour
         else
         {
             // Son paneli de gösterdik
-            currentPanelIndex++; 
+            currentPanelIndex++;
         }
     }
 
@@ -186,31 +173,31 @@ public class ComicStoryManager : MonoBehaviour
     }
 
     IEnumerator FadeInPanel(int index)
-{
-    isFading = true;
-    Image currentImage = comicPanels[index];
-
-    // 🔊 Panel sesi çal
-    if (audioSource != null && panelSounds != null && index < panelSounds.Length)
     {
-        if (panelSounds[index] != null)
+        isFading = true;
+        Image currentImage = comicPanels[index];
+
+        // 🔊 Panel sesi çal
+        if (audioSource != null && panelSounds != null && index < panelSounds.Length)
         {
-            audioSource.PlayOneShot(panelSounds[index]);
+            if (panelSounds[index] != null)
+            {
+                audioSource.PlayOneShot(panelSounds[index]);
+            }
         }
+
+        float t = 0f;
+
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            SetAlpha(currentImage, Mathf.Lerp(0f, 1f, t / fadeDuration));
+            yield return null;
+        }
+
+        SetAlpha(currentImage, 1f);
+        isFading = false;
     }
-
-    float t = 0f;
-
-    while (t < fadeDuration)
-    {
-        t += Time.deltaTime;
-        SetAlpha(currentImage, Mathf.Lerp(0f, 1f, t / fadeDuration));
-        yield return null;
-    }
-
-    SetAlpha(currentImage, 1f);
-    isFading = false;
-}
 
     void SetAlpha(Image img, float alpha)
     {
@@ -231,17 +218,6 @@ public class ComicStoryManager : MonoBehaviour
     void EndComic()
     {
         Debug.Log("Çizgi roman hikayesi bitti!");
-        
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            Debug.Log("Geçilecek sahne: " + nextSceneName + ". Eğer burada hata alıyorsanız, sahneniz 'Build Settings' içindeki 'Scenes in Build' listesinde ekli değildir!");
-            // Belirtilen sahneye ismiyle geç
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("DİKKAT: Sonraki sahne girilmemiş! Inspector'da 'Next Scene' kısmına bir sahne sürüklediğinizden emin olun.");
-            gameObject.SetActive(false); 
-        }
+        P_SceneManager.Instance.LoadNextLevel();
     }
 }

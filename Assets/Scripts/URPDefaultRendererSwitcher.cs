@@ -154,7 +154,7 @@ public class URPDefaultRendererSwitcher : MonoBehaviour
             if (entry.sceneName == sceneName)
             {
                 desired = entry.rendererType;
-                found   = true;
+                found = true;
                 break;
             }
         }
@@ -185,7 +185,7 @@ public class URPDefaultRendererSwitcher : MonoBehaviour
         {
             if (dataList[i] == null) continue;
             bool is2D = dataList[i].GetType().Name.Contains("2D");
-            if ((type == RendererType.Renderer2D &&  is2D) ||
+            if ((type == RendererType.Renderer2D && is2D) ||
                 (type == RendererType.Renderer3D && !is2D))
             {
                 targetIndex = i;
@@ -212,32 +212,9 @@ public class URPDefaultRendererSwitcher : MonoBehaviour
         // so clear them all. –1 = "use the pipeline default".
         ResetCameraRendererOverrides();
 
-        // --- Force a full pipeline flush every time ---------------------------
-        // Even if the index was already correct we still flush so that shader
-        // state, terrain materials, and 2D-light render passes are rebuilt
-        // after an ad or focus-resume.
-        StartCoroutine(FlushPipelineNextFrame(pipelineAsset));
-    }
-
-    /// <summary>
-    /// Tears down and reconstructs the render pipeline by briefly nulling its
-    /// reference and restoring it on the next frame.
-    /// </summary>
-    private IEnumerator FlushPipelineNextFrame(UniversalRenderPipelineAsset pipelineAsset)
-    {
-        var qualityAsset = QualitySettings.renderPipeline as UniversalRenderPipelineAsset;
-        if (qualityAsset == pipelineAsset)
-        {
-            QualitySettings.renderPipeline = null;
-            yield return null;
-            QualitySettings.renderPipeline = pipelineAsset;
-        }
-        else
-        {
-            GraphicsSettings.defaultRenderPipeline = null;
-            yield return null;
-            GraphicsSettings.defaultRenderPipeline = pipelineAsset;
-        }
+        // Note: no pipeline flush is needed here. URP reads m_DefaultRendererIndex
+        // dynamically each frame when a camera fetches its renderer, so the new
+        // index takes effect immediately on the next rendered frame.
     }
 
     /// <summary>
@@ -294,11 +271,11 @@ public class URPDefaultRendererSwitcher : MonoBehaviour
 
     private static void CacheReflectionFields()
     {
-        var flags     = BindingFlags.NonPublic | BindingFlags.Instance;
+        var flags = BindingFlags.NonPublic | BindingFlags.Instance;
         var assetType = typeof(UniversalRenderPipelineAsset);
 
         s_DefaultRendererIndexField = assetType.GetField("m_DefaultRendererIndex", flags);
-        s_RendererDataListField     = assetType.GetField("m_RendererDataList",     flags);
+        s_RendererDataListField = assetType.GetField("m_RendererDataList", flags);
 
         if (s_DefaultRendererIndexField == null)
             Debug.LogError("[URPDefaultRendererSwitcher] Reflection: could not find 'm_DefaultRendererIndex'. " +

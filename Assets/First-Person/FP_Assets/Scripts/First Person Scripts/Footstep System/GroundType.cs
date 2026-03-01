@@ -8,7 +8,7 @@ namespace FirstPersonSystem
     public class GroundType : ScriptableObject
     {
         public AudioClip[] walkAudioClips;
-        [TagSelector] public string groundTag = "";
+        //[TagSelector] public string groundTag = "";
         public int indexOfTerrainTexture;
     }
 }
