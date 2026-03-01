@@ -17,6 +17,18 @@ public class Enemy_shooter : Platformer_EnemyBase
     private float lineOfSightCheckTimer;
     private float shootCooldownTimer;
 
+    private bool isHardGame;
+
+    private void Start()
+    {
+        isHardGame = PlayerPrefs.GetInt("HardGame", 0) == 1;
+        if( isHardGame)
+        {
+            waitBeforeShooting = 0f;
+            shootCooldownTimer -= 1f;
+        }
+    }
+
     protected override void Update()
     {
         base.Update();

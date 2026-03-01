@@ -6,7 +6,15 @@ public class DoorNextLevel : MonoBehaviour
     {
         if (collision != null && collision.CompareTag("Player"))
         {
-            Platform_SceneManager.Instance.LoadNextScene();
+            P_SceneManager.Instance.LoadNextLevelWithFade(1f);
+            if (P_SceneManager.Instance.GetCurrentSceneName() == "PlatformerTest")
+            {
+                PlayerPrefs.SetInt("HardGame", 1);
+            }
+            else
+            {
+                P_SceneManager.Instance.LoadNextLevelWithFade(1f);
+            }
         }
     }
 }

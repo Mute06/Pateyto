@@ -91,6 +91,10 @@ public class P_SceneManager : MonoBehaviour
 
     }
 
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
     public string GetNextSceneName()
     {
         return SceneManager.GetSceneAt(SceneManager.GetActiveScene().buildIndex + 1).name;
