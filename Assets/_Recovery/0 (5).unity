@@ -1647,7 +1647,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6892961243452379188, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
       propertyPath: m_Name
-      value: "kap\u0131_0 (3)"
+      value: Door to exit
       objectReference: {fileID: 0}
     - target: {fileID: 7665617281664968684, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7969,6 +7969,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 737096243268300836, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6892961243452379188, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
       propertyPath: m_Name
       value: "kap\u0131_0 (4)"
@@ -8485,6 +8489,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 737096243268300836, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6892961243452379188, guid: f2778add2cf8d6947935e8ae666dcfa7, type: 3}
       propertyPath: m_Name
       value: "kap\u0131_0 (2)"
@@ -8819,7 +8827,7 @@ Transform:
   m_GameObject: {fileID: 878177147}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0027186368, y: -0.99999636, z: -0, w: 0}
-  m_LocalPosition: {x: 1.5056295, y: 1.5706694, z: 0}
+  m_LocalPosition: {x: 1.53, y: 5.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11758,63 +11766,51 @@ MonoBehaviour:
     - character:
         name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: The Solaris Hibiscus...
+      line: You received our letter.
     - character:
         name: Elien
         icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
-      line: What about it?
+      line: You knew what happened.
     - character:
-        name: Sephira
-        icon: {fileID: -1899628931, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: We need the flower.
-    - character:
-        name: Thren
-        icon: {fileID: 1348569514, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: Bring it to us.
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: Grief is loud. We hear it.
     - character:
         name: Elien
         icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
-      line: And why would I?
+      line: You can bring them back.
     - character:
         name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: Because we will return your family.
+      line: We can return what was taken.
+    - character:
+        name: Morvane
+        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
+      line: ..........
     - character:
         name: Elien
         icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
-      line: "You\u2019ll revive them?"
+      line: "Then why me? Why don\u2019t you take it yourselves?"
     - character:
         name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: Yes!!
-    - character:
-        name: Sephira
-        icon: {fileID: -1899628931, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: "The flower\u2026 for their lives."
-    - character:
-        name: Morvane
-        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: Deal?
+      line: Lumenwood forbids us.
     - character:
         name: Elien
         icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
-      line: "Why me? Why don\u2019t you take it yourselves?"
+      line: The forest rejects our kind.
     - character:
         name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: The forest is forbidden to us.
-    - character:
-        name: Sephira
-        icon: {fileID: -1899628931, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
       line: It answers only to the living.
     - character:
-        name: Morvane
-        icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: Lumenwood rejects our kind.
+        name: Elien
+        icon: {fileID: 1678751631, guid: b3ba63df58cd53b4e851ad22d89519dd, type: 3}
+      line: And if I refuse?
     - character:
         name: Morvane
         icon: {fileID: 869631482, guid: d2c32b4c9c4450a49a2c520165af7918, type: 3}
-      line: So we ask you...
+      line: Then they remain as they are.
   triggerOnEnter: 0
 --- !u!114 &1504234061
 MonoBehaviour:
@@ -13772,6 +13768,97 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1956723163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1956723166}
+  - component: {fileID: 1956723165}
+  - component: {fileID: 1956723164}
+  m_Layer: 0
+  m_Name: Next Scene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1956723164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956723163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a94499272622e6499ceac41c9859e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnTriggerNextScene
+--- !u!61 &1956723165
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956723163}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1956723166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956723163}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 3.94, z: 0}
+  m_LocalScale: {x: 4.9206, y: 1.18, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999534007
 GameObject:
   m_ObjectHideFlags: 0
@@ -14910,3 +14997,4 @@ SceneRoots:
   - {fileID: 1388616632}
   - {fileID: 1825348390}
   - {fileID: 167966598}
+  - {fileID: 1956723166}
