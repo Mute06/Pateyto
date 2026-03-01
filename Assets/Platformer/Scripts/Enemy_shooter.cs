@@ -8,11 +8,13 @@ public class Enemy_shooter : Platformer_EnemyBase
     [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private float shootCooldown = 2f;
     [SerializeField] private float stopDuration = 0.8f;
+    [SerializeField] private float waitBeforeShooting = 0.5f;
 
     [Header("Line of Sight")]
     [SerializeField] private float shootRange = 6f;
     [SerializeField] private LayerMask lineOfSightBlockLayer;
-
+    
+    private float lineOfSightCheckTimer;
     private float shootCooldownTimer;
 
     protected override void Update()
@@ -25,7 +27,15 @@ public class Enemy_shooter : Platformer_EnemyBase
             shootCooldownTimer -= Time.deltaTime;
 
         if (shootCooldownTimer <= 0f && HasLineOfSight())
-            Shoot();
+        {
+            lineOfSightCheckTimer += Time.deltaTime;
+            if (lineOfSightCheckTimer >= waitBeforeShooting)
+            {
+                lineOfSightCheckTimer = 0f;
+                Shoot();
+            }
+        }
+        
     }
 
     // Casts a horizontal ray from the fire point in the direction the enemy faces.

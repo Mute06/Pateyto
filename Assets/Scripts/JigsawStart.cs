@@ -14,6 +14,11 @@ public class JigsawStart : MonoBehaviour
         {
             currentjigsaw = Instantiate(jigSawPrefab);
             currentPuzzle = currentjigsaw.GetComponent<JigsawPuzzleGame>();
+            onPuzzleComplete.AddListener(() =>
+            {
+                Destroy(currentjigsaw);
+                P_SceneManager.Instance.LoadNextLevelWithFade(1f);
+            });
             currentPuzzle.OnPuzzleComplete = onPuzzleComplete;
         }   
     }

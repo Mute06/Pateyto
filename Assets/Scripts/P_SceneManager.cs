@@ -88,6 +88,13 @@ public class P_SceneManager : MonoBehaviour
     public void ReloadLevelWithFade(float duration)
     {
         StartCoroutine(FadeAndLoadRoutine(SceneManager.GetActiveScene().buildIndex, duration));
+
+    }
+
+    public string GetNextSceneName()
+    {
+        return SceneManager.GetSceneAt(SceneManager.GetActiveScene().buildIndex + 1).name;
+
     }
 
     // ── Coroutines ───────────────────────────────────────────────

@@ -155,6 +155,9 @@ namespace FirstPersonSystem
 
         private void Update()
         {
+            // Prevent physics explosion and tunneling on massive lag spikes (e.g., URP asset rebuild at scene load)
+            if (Time.deltaTime > 0.1f) return;
+
             if (CanMove)
             {
                 HandleMovementInput();
