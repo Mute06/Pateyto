@@ -1894,6 +1894,9 @@ MonoBehaviour:
   mapBoundary: {fileID: 579398887}
   dirction: 1
   playerPositionOffset: 1
+  onMapTransition:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &178655533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9530,6 +9533,53 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &893853241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893853243}
+  - component: {fileID: 893853242}
+  m_Layer: 0
+  m_Name: AudioPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893853242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893853241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a2b8722ab673c4287f1c9af0026fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::P_AudioPlayer
+  sfxVolume: 1
+  musicClip: {fileID: 8300000, guid: 7cd3c65bf3376764397572654296b2ed, type: 3}
+  musicVolume: 0.87
+--- !u!4 &893853243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893853241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &908254360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11407,6 +11457,21 @@ MonoBehaviour:
   mapBoundary: {fileID: 401858132}
   dirction: 3
   playerPositionOffset: 1
+  onMapTransition:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 893853242}
+        m_TargetAssemblyTypeName: P_AudioPlayer, Assembly-CSharp
+        m_MethodName: PlayMusic
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 8d05358e5485afe4fa41737751454f78, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &1168880804
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11501,6 +11566,9 @@ MonoBehaviour:
   mapBoundary: {fileID: 1608193879}
   dirction: 1
   playerPositionOffset: 1
+  onMapTransition:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1182133795
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12482,6 +12550,9 @@ MonoBehaviour:
   mapBoundary: {fileID: 1608193879}
   dirction: 1
   playerPositionOffset: 1
+  onMapTransition:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1466271720
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16697,3 +16768,4 @@ SceneRoots:
   - {fileID: 1825348390}
   - {fileID: 167966598}
   - {fileID: 1956723166}
+  - {fileID: 893853243}

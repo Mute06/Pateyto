@@ -1,11 +1,13 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.Events;
 
 public class MapTransition : MonoBehaviour
 {
     [SerializeField] private Collider2D mapBoundary;
     [SerializeField] private Dirction dirction;
     [SerializeField] private float playerPositionOffset = 1f;
+    public UnityEvent onMapTransition;
     CinemachineConfiner2D confiner;
 
 
@@ -27,6 +29,8 @@ public class MapTransition : MonoBehaviour
         {
             confiner.BoundingShape2D = mapBoundary;
             UpdatePlayerPosition(collision.gameObject);
+
+            onMapTransition?.Invoke();
         }
     }
 
