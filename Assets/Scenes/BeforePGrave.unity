@@ -260,6 +260,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 407477419511637894, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: nextScene
+      value: 
+      objectReference: {fileID: 102900000, guid: b047241fa8c363e46b01f51e9033fe7c, type: 3}
     - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
       propertyPath: autoPlay
       value: 1
