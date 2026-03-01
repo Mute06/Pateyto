@@ -2,12 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class ComicStoryManager : MonoBehaviour
 {
     [Header("Story Panels")]
     public Image[] comicPanels; // Çizgi roman paneli UI objeleri
     
+    [Header("Fade to Black (Son Panel Sonrası)")]
+    public Image fadeOverlay; // Tam ekran siyah Image
+    public TextMeshProUGUI dreamText; // "…I wish it was just a dream." yazısı
+    public float blackFadeDuration = 1.5f; // Siyahlığın fade-in süresi
+    public float textFadeDuration = 1.5f; // Yazının fade-in süresi
+    public float textDisplayDuration = 3f; // Yazının ekranda kalma süresi
+    [TextArea]
+    public string dreamMessage = "\u2026I wish it was just a dream.";
+
     [Header("Settings")]
 #if UNITY_EDITOR
     [Tooltip("Çizgi roman bitince yüklenecek sahneyi buraya sürükleyin")]
@@ -23,7 +33,8 @@ public class ComicStoryManager : MonoBehaviour
     
     private int currentPanelIndex = 0;
     private float timer = 0f;
-    private bool isFading = false; 
+    private bool isFading = false;
+    private bool dreamSequenceStarted = false;
 
     void Start()
     {
@@ -45,6 +56,10 @@ public class ComicStoryManager : MonoBehaviour
             }
         }
 
+        // Fade overlay ve dream text'i başlangıçta gizle
+        if (fadeOverlay != null) SetAlpha(fadeOverlay, 0f);
+        if (dreamText != null) SetTextAlpha(dreamText, 0f);
+
         if (comicPanels.Length > 0 && comicPanels[0] != null)
         {
             // İlk paneli yavaşça göster (fade in)
@@ -60,6 +75,7 @@ public class ComicStoryManager : MonoBehaviour
     {
         // Eğer paneller atanmamışsa veya şu an bir geçiş(fade) yapılıyorsa bekle
         if (comicPanels == null || comicPanels.Length == 0 || isFading) return;
+        if (dreamSequenceStarted) return;
 
         // Bütün paneller gösterildi mi?
         if (currentPanelIndex >= comicPanels.Length) 
@@ -69,14 +85,14 @@ public class ComicStoryManager : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer >= timePerPanel)
                 {
-                    EndComic();
+                    StartDreamSequence();
                 }
             }
             else
             {
                 if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
                 {
-                    EndComic();
+                    StartDreamSequence();
                 }
             }
             return;
@@ -115,6 +131,57 @@ public class ComicStoryManager : MonoBehaviour
         }
     }
 
+    void StartDreamSequence()
+    {
+        dreamSequenceStarted = true;
+        StartCoroutine(DreamSequenceRoutine());
+    }
+
+    IEnumerator DreamSequenceRoutine()
+    {
+        isFading = true;
+
+        // 1) Siyah overlay fade in — tüm ekranı kaplar
+        if (fadeOverlay != null)
+        {
+            fadeOverlay.gameObject.SetActive(true);
+            float t = 0f;
+            while (t < blackFadeDuration)
+            {
+                t += Time.deltaTime;
+                SetAlpha(fadeOverlay, Mathf.Lerp(0f, 1f, t / blackFadeDuration));
+                yield return null;
+            }
+            SetAlpha(fadeOverlay, 1f);
+        }
+
+        // Kısa bir bekleme
+        yield return new WaitForSeconds(0.5f);
+
+        // 2) Dream text fade in
+        if (dreamText != null)
+        {
+            dreamText.text = dreamMessage;
+            dreamText.gameObject.SetActive(true);
+            float t = 0f;
+            while (t < textFadeDuration)
+            {
+                t += Time.deltaTime;
+                SetTextAlpha(dreamText, Mathf.Lerp(0f, 1f, t / textFadeDuration));
+                yield return null;
+            }
+            SetTextAlpha(dreamText, 1f);
+        }
+
+        // 3) Yazının ekranda kalma süresi
+        yield return new WaitForSeconds(textDisplayDuration);
+
+        isFading = false;
+
+        // 4) Sahne geçişi
+        EndComic();
+    }
+
     IEnumerator FadeInPanel(int index)
     {
         isFading = true;
@@ -139,6 +206,14 @@ public class ComicStoryManager : MonoBehaviour
         img.color = c;
     }
 
+    void SetTextAlpha(TextMeshProUGUI txt, float alpha)
+    {
+        if (txt == null) return;
+        Color c = txt.color;
+        c.a = alpha;
+        txt.color = c;
+    }
+
     void EndComic()
     {
         Debug.Log("Çizgi roman hikayesi bitti!");
@@ -146,8 +221,8 @@ public class ComicStoryManager : MonoBehaviour
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             Debug.Log("Geçilecek sahne: " + nextSceneName + ". Eğer burada hata alıyorsanız, sahneniz 'Build Settings' içindeki 'Scenes in Build' listesinde ekli değildir!");
-            // Belirtilen yeni sahneye geç
-            P_SceneManager.Instance.LoadNextLevel();
+            // Belirtilen sahneye ismiyle geç
+            SceneManager.LoadScene(nextSceneName);
         }
         else
         {
