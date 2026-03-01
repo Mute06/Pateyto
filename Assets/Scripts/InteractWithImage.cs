@@ -6,9 +6,6 @@ public class InteractWithImage : MonoBehaviour
     [Header("Hedef Obje Ayarları")]
     public GameObject targetGameObject;
 
-    [Header("Input")]
-    public InputActionReference interactAction;
-
     [Header("Etkileşim Ayarları")]
     public bool autoInteract = false;
     [Tooltip("Alana girdikten kaç saniye sonra etkileşime geçebilir?")]
@@ -27,48 +24,6 @@ public class InteractWithImage : MonoBehaviour
     private float openTime; // Resmin açıldığı an
     private bool isOpened = false;
     private bool isSelfDeactivating = false;
-
-    private void OnEnable()
-    {
-        if (interactAction != null)
-        {
-            interactAction.action.performed += OnInteractPerformed;
-            interactAction.action.Enable();
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (interactAction != null)
-        {
-            interactAction.action.performed -= OnInteractPerformed;
-        }
-    }
-
-    private void OnInteractPerformed(InputAction.CallbackContext context)
-    {
-        if (isSelfDeactivating) return;
-
-        // Only block opening if player is out of range. 
-        // If it is already opened, we want them to be able to close it regardless.
-        if (!isOpened && !isPlayerInRange) return;
-
-        if (!isOpened)
-        {
-            OpenImage();
-        }
-        else
-        {
-            if (Time.time - openTime >= closeCooldown)
-            {
-                CloseAndScheduleDestroy();
-            }
-            else
-            {
-                Debug.Log("Henüz kapatamazsın! Bekle: " + (closeCooldown - (Time.time - openTime)).ToString("F1") + "s");
-            }
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -89,12 +44,31 @@ public class InteractWithImage : MonoBehaviour
 
     private void Update()
     {
-        // autoInteract is time-based only; key-press logic is handled in OnInteractPerformed
-        if (!isPlayerInRange || isSelfDeactivating || isOpened) return;
+        if (!isPlayerInRange || isSelfDeactivating) return;
 
-        if (autoInteract && Time.time - entryTime >= interactionDelay)
+        bool ePressed = Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame;
+
+        // --- AÇMA MANTIĞI ---
+        if (!isOpened)
         {
-            OpenImage();
+            bool timeIsUp = (Time.time - entryTime >= interactionDelay);
+            if ((autoInteract && timeIsUp) || (timeIsUp && ePressed))
+            {
+                OpenImage();
+            }
+        }
+        // --- KAPATMA MANTIĞI ---
+        else if (ePressed)
+        {
+            // Resim açılalı 'closeCooldown' kadar süre geçmiş mi?
+            if (Time.time - openTime >= closeCooldown)
+            {
+                CloseAndScheduleDestroy();
+            }
+            else
+            {
+                Debug.Log("Henüz kapatamazsın! Bekle: " + (closeCooldown - (Time.time - openTime)).ToString("F1") + "s");
+            }
         }
     }
 
@@ -112,20 +86,8 @@ public class InteractWithImage : MonoBehaviour
     {
         if (targetGameObject != null)
         {
-            // If the target has a SimpleFade component, use it to fade out smoothly.
-            SimpleFade fadeComponent = targetGameObject.GetComponent<SimpleFade>();
-            if (fadeComponent != null)
-            {
-                fadeComponent.FadeOutAndDisable();
-            }
-            else
-            {
-                // Fallback to instantly hiding it if there is no fader
-                targetGameObject.SetActive(false);
-            }
-
-            // Mark as deactivating so no new interactions handle
-            isSelfDeactivating = true;
+            targetGameObject.SetActive(false);
+            isSelfDeactivating = true; // Artık hiçbir tuş işlemez
 
             // Belirlenen süre sonra etkileşim objesini kapat
             Invoke("DisableThisObject", selfDeactivateDelay);
