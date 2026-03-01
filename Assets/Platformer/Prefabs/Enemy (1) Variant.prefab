@@ -262,9 +262,9 @@ MonoBehaviour:
   firePoint: {fileID: 4590966367466320232}
   bulletPrefab: {fileID: 3201624604922713440, guid: 406cb5caaaa086a469b1bd83ee2c3e07, type: 3}
   bulletSpeed: 10
-  shootCooldown: 2
-  stopDuration: 0.8
-  shootRange: 15
+  shootCooldown: 3
+  stopDuration: 1.2
+  shootRange: 12
   lineOfSightBlockLayer:
     serializedVersion: 2
     m_Bits: 448

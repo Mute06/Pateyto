@@ -176,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Platformer_EnemyBase
   maxHealth: 1
   moveSpeed: 3
-  jumpForce: 10
+  jumpForce: 7
   detectionRange: 10
   obstacleCheckRadius: 0.15
   groundCheck: {fileID: 2524140923522842672}
@@ -317,8 +317,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2.79
+  m_Color: {r: 0.82705855, g: 0.6924528, b: 1, a: 1}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 898e2dd369a1f5737fc42f2b00000000e1a2e0b4fba22e4da587b419
@@ -341,8 +341,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.1
-  m_PointLightOuterRadius: 2.34
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 3.49
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
