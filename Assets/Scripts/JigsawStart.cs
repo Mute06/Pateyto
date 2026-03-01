@@ -14,7 +14,11 @@ public class JigsawStart : MonoBehaviour
         {
             puzzleStarted = true;
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             currentJigsaw = Instantiate(jigSawPrefab);
+            Time.timeScale = 1f;
 
             currentPuzzle = currentJigsaw.GetComponent<JigsawPuzzleGame>();
 
