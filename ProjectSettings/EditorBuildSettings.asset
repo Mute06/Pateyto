@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: 7edc3301734be7f41a65c7e7e265a680
   - enabled: 1
+    path: Assets/Scenes/AfterStart.unity
+    guid: a9a04f39b5a68454fb7dd3cf782a4451
+  - enabled: 0
     path: Assets/Scenes/NextScene.unity
     guid: b43ffa02e2edc234ca29e54ceaf62758
   - enabled: 1
@@ -21,17 +24,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1.unity
     guid: 4ffe1981953fb1048b2b9338e5575c2c
   - enabled: 1
+    path: Assets/Scenes/BeforePGrave.unity
+    guid: eaf4a16f2960db2419aab3353e9f16ed
+  - enabled: 1
     path: Assets/Scenes/Level1_Runner.unity
     guid: b047241fa8c363e46b01f51e9033fe7c
+  - enabled: 1
+    path: Assets/Scenes/BeforePlatfom.unity
+    guid: 920e574d66b78534bbedb4d6b1de88d1
   - enabled: 1
     path: Assets/Platformer/Scenes/PlatformerTest.unity
     guid: a9f0f61fd76af20498c803952b416d8a
   - enabled: 1
     path: Assets/Scenes/Level2_Puzzle.unity
     guid: d169f1980bb551a4bad25b294caa9439
-  - enabled: 1
-    path: Assets/Scenes/BeforePlatfom.unity
-    guid: 920e574d66b78534bbedb4d6b1de88d1
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: fc963e0778b707a40bff8ca0eec2cd04, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
