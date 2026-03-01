@@ -5,18 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: 7edc3301734be7f41a65c7e7e265a680
   - enabled: 1
     path: Assets/Scenes/AfterStart.unity
     guid: a9a04f39b5a68454fb7dd3cf782a4451
-  - enabled: 0
-    path: Assets/Scenes/NextScene.unity
-    guid: b43ffa02e2edc234ca29e54ceaf62758
   - enabled: 1
     path: Assets/Topdown/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
@@ -30,8 +24,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1_Runner.unity
     guid: b047241fa8c363e46b01f51e9033fe7c
   - enabled: 1
-    path: Assets/Scenes/Level2_Puzzle.unity
-    guid: d169f1980bb551a4bad25b294caa9439
+    path: Assets/Topdown/Scenes/YapbozScene.unity
+    guid: dde4276b71adfe8489e50897d738fe52
   - enabled: 1
     path: Assets/Scenes/BeforePlatfom.unity
     guid: 920e574d66b78534bbedb4d6b1de88d1
