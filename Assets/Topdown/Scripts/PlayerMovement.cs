@@ -16,17 +16,34 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
     public bool restrictToRightOnly = false;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         moveAction = InputSystem.actions.FindAction("Move");
         animator = GetComponentInChildren<Animator>();
-
-        moveAction.started += OnMoveStarted;
-        moveAction.canceled += OnMoveCanceled;
-        moveAction.performed += OnMovePerformed;
     }
 
+    private void OnEnable()
+    {
+        if (moveAction != null)
+        {
+            moveAction.started += OnMoveStarted;
+            moveAction.canceled += OnMoveCanceled;
+            moveAction.performed += OnMovePerformed;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (moveAction != null)
+        {
+            moveAction.started -= OnMoveStarted;
+            moveAction.canceled -= OnMoveCanceled;
+            moveAction.performed -= OnMovePerformed;
+        }
+        moveInput = Vector2.zero;
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+    }
 
 
     private void Update()
@@ -77,11 +94,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("InputY", context.ReadValue<Vector2>().y);
     }
 
-    private void OnDestroy()
-    {
-        moveAction.started -= OnMoveStarted;
-        moveAction.canceled -= OnMoveCanceled;
-        moveAction.performed -= OnMovePerformed;
-    }
+
 
 }

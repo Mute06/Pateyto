@@ -34,16 +34,22 @@ public class ForestSequenceController : MonoBehaviour
         playerAnim = playerObj.GetComponentInChildren<Animator>();
         playerRb = playerObj.GetComponent<Rigidbody2D>();
 
-        movementScript = (MonoBehaviour)playerObj.GetComponent("PlatformerMovement") ??
-                         (MonoBehaviour)playerObj.GetComponent("PlayerMovement");
+        movementScript =(MonoBehaviour)playerObj.GetComponent("PlayerMovement");
 
         StartCoroutine(SequenceRoutine());
     }
 
+    private RigidbodyType2D originalBodyType;
+
     private IEnumerator SequenceRoutine()
     {
         if (movementScript != null) movementScript.enabled = false;
-        if (playerRb != null) playerRb.useAutoMass = true;
+        
+        if (playerRb != null) 
+        {
+            originalBodyType = playerRb.bodyType;
+            playerRb.linearVelocity = Vector2.zero;
+        }
 
         if (square1 != null) playerObj.transform.position = square1.position;
 
@@ -54,9 +60,12 @@ public class ForestSequenceController : MonoBehaviour
                 Vector3 dir = (square2.position - playerObj.transform.position).normalized;
 
                 // Yön Dönüşü
-                bool faceRight = dir.x >= 0;
-                playerObj.transform.eulerAngles = new Vector3(0, faceRight ? 0 : 180, 0);
-                SetPrivateField("facingRight", faceRight);
+                if (movementScript != null && movementScript.GetType().Name == "PlatformerMovement")
+                {
+                    bool faceRight = dir.x >= 0;
+                    playerObj.transform.eulerAngles = new Vector3(0, faceRight ? 0 : 180, 0);
+                    SetPrivateField("facingRight", faceRight);
+                }
 
                 UpdateWalkAnimations(dir);
                 playerObj.transform.position = Vector3.MoveTowards(playerObj.transform.position, square2.position, autoWalkSpeed * Time.deltaTime);
@@ -69,10 +78,10 @@ public class ForestSequenceController : MonoBehaviour
         SetRestrictLeftMovement(true);
         if (movementScript != null) movementScript.enabled = true;
 
-        while (square3Trigger != null && !square3Trigger.bounds.Contains(playerObj.transform.position))
+        while (square3Trigger != null && !square3Trigger.OverlapPoint(playerObj.transform.position))
             yield return null;
 
-        if (playerRb != null) playerRb.useAutoMass = false;
+        if (playerRb != null) playerRb.bodyType = originalBodyType;
         SetRestrictLeftMovement(false);
         Destroy(gameObject);
     }
