@@ -29,6 +29,9 @@ public class ComicStoryManager : MonoBehaviour
     public float timePerPanel = 3f; 
     public float fadeDuration = 0.5f; 
     
+    [Header("Panel Sounds")]
+    public AudioSource audioSource; 
+    public AudioClip[] panelSounds;
 
     
     private int currentPanelIndex = 0;
@@ -183,20 +186,31 @@ public class ComicStoryManager : MonoBehaviour
     }
 
     IEnumerator FadeInPanel(int index)
+{
+    isFading = true;
+    Image currentImage = comicPanels[index];
+
+    // 🔊 Panel sesi çal
+    if (audioSource != null && panelSounds != null && index < panelSounds.Length)
     {
-        isFading = true;
-        Image currentImage = comicPanels[index];
-        float t = 0f;
-        
-        while (t < fadeDuration)
+        if (panelSounds[index] != null)
         {
-            t += Time.deltaTime;
-            SetAlpha(currentImage, Mathf.Lerp(0f, 1f, t / fadeDuration));
-            yield return null;
+            audioSource.PlayOneShot(panelSounds[index]);
         }
-        SetAlpha(currentImage, 1f);
-        isFading = false;
     }
+
+    float t = 0f;
+
+    while (t < fadeDuration)
+    {
+        t += Time.deltaTime;
+        SetAlpha(currentImage, Mathf.Lerp(0f, 1f, t / fadeDuration));
+        yield return null;
+    }
+
+    SetAlpha(currentImage, 1f);
+    isFading = false;
+}
 
     void SetAlpha(Image img, float alpha)
     {
