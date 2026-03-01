@@ -9564,7 +9564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::P_AudioPlayer
   sfxVolume: 1
   musicClip: {fileID: 8300000, guid: 7cd3c65bf3376764397572654296b2ed, type: 3}
-  musicVolume: 0.87
+  musicVolume: 0.511
 --- !u!4 &893853243
 Transform:
   m_ObjectHideFlags: 0
