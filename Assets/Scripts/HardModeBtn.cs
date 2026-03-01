@@ -21,4 +21,9 @@ public class HardModeBtn : MonoBehaviour
     {
         P_SceneManager.Instance.LoadLevelIndexWithFade(8, 1f);
     }
+
+    public void SetIsHardGameToFalse()
+    {
+        PlayerPrefs.SetInt("HardGame", 0);
+    }
 }

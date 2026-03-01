@@ -1190,6 +1190,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1536289091}
+        m_TargetAssemblyTypeName: HardModeBtn, Assembly-CSharp
+        m_MethodName: SetIsHardGameToFalse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1059665074}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: PlayGame
@@ -1570,8 +1582,7 @@ Transform:
   m_LocalPosition: {x: 1008, y: 587, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1536289090}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1314687258
@@ -2013,7 +2024,7 @@ RectTransform:
   - {fileID: 346089180}
   - {fileID: 788107583}
   - {fileID: 503362016}
-  m_Father: {fileID: 1314687257}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2254,6 +2265,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1536289090}
   - {fileID: 1314687257}
   - {fileID: 2048312341}
   - {fileID: 1059665075}
