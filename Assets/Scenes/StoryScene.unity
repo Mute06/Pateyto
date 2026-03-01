@@ -721,8 +721,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 424911436}
     - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
+      propertyPath: fadeDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
+      propertyPath: timePerPanel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
       propertyPath: nextSceneName
       value: SampleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
+      propertyPath: textFadeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
+      propertyPath: textDisplayDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 407477419511637894, guid: 9c7c2436e9ad0334a91e4971c4c3603b, type: 3}
       propertyPath: 'comicPanels.Array.data[0]'
