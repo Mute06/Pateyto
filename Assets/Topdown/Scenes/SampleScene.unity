@@ -10599,7 +10599,7 @@ Transform:
   m_GameObject: {fileID: 1038700863}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0027186368, w: 0.99999636}
-  m_LocalPosition: {x: -20.936989, y: -0.7132354, z: -10}
+  m_LocalPosition: {x: -20.936798, y: -0.71323436, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15304,6 +15304,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a94499272622e6499ceac41c9859e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnTriggerNextScene
+  onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 893853242}
+        m_TargetAssemblyTypeName: P_AudioPlayer, Assembly-CSharp
+        m_MethodName: StopMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &1956723165
 BoxCollider2D:
   m_ObjectHideFlags: 0
