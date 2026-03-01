@@ -281,6 +281,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: panelSounds.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
       propertyPath: 'comicPanels.Array.data[4]'
       value: 
       objectReference: {fileID: 2067995224}
@@ -288,6 +292,30 @@ PrefabInstance:
       propertyPath: 'comicPanels.Array.data[5]'
       value: 
       objectReference: {fileID: 1952494630}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
+    - target: {fileID: 445843403066490211, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
+      propertyPath: 'panelSounds.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0480be9d3e8c02a439c38c90fa6edfde, type: 3}
     - target: {fileID: 587951657453932785, guid: 783c152d3b417bd4f81af5f08c98f581, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5208877
