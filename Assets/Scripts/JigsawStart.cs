@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class JigsawStart : MonoBehaviour
 {
     [SerializeField] private GameObject jigSawPrefab;
+    public UnityEvent OnPuzzleStart;
+
 
     private JigsawPuzzleGame currentPuzzle;
     private GameObject currentJigsaw;
@@ -12,6 +15,8 @@ public class JigsawStart : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !puzzleStarted)
         {
+            OnPuzzleStart?.Invoke();
+
             puzzleStarted = true;
 
             Cursor.lockState = CursorLockMode.None;
@@ -29,6 +34,16 @@ public class JigsawStart : MonoBehaviour
     private void PuzzleFinished()
     {
         Destroy(currentJigsaw);
-        P_SceneManager.Instance.LoadNextLevelWithFade(1f);
+        StartLoadAfter(3f);
+    }
+
+    private void LoadNextScene()
+    {
+        P_SceneManager.Instance.LoadNextLevelWithFade(2f);
+    }
+
+    private void StartLoadAfter(float delay)
+    {
+        Invoke(nameof(LoadNextScene), delay);
     }
 }

@@ -6716,6 +6716,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JigsawStart
   jigSawPrefab: {fileID: 8831808900106912339, guid: e78a7913d94710f4d836910635bd7626, type: 3}
+  OnPuzzleStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 977802042}
+        m_TargetAssemblyTypeName: UnityEngine.Rendering.Universal.Light2D, Unity.RenderPipelines.Universal.2D.Runtime
+        m_MethodName: set_intensity
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1.2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1566769985
 GameObject:
   m_ObjectHideFlags: 0
@@ -7288,7 +7303,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbeb03ebef053984d8f238848f57245e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::URPDefaultRendererSwitcher
-  startRenderer: 1
+  urpAsset: {fileID: 0}
+  sceneRendererMap:
+  - sceneName: Level1
+    rendererType: 0
+  - sceneName: Level1_Runner
+    rendererType: 0
+  - sceneName: StartScene
+    rendererType: 1
+  - sceneName: AfterStart
+    rendererType: 1
+  - sceneName: BeforePlatfom
+    rendererType: 1
+  - sceneName: BeforePGrave
+    rendererType: 1
+  - sceneName: PlatformerTest
+    rendererType: 1
+  - sceneName: NewPlusShooter
+    rendererType: 1
+  - sceneName: YapbozScene
+    rendererType: 1
+  - sceneName: Level2_Puzzle
+    rendererType: 1
+  - sceneName: JigsawPuzzleScene
+    rendererType: 1
+  - sceneName: StoryScene 1
+    rendererType: 1
+  - sceneName: TheEND
+    rendererType: 1
 --- !u!4 &1662309671
 Transform:
   m_ObjectHideFlags: 0
