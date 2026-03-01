@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public Image characterIcon;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
+
+    public UnityEvent onDialogueEnd;
 
     private Queue<DialogueLine> lines;
 
@@ -89,5 +93,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         animator.Play("hide");
         playerController.canMove = true; // Oyuncu hareketini yeniden aktif et
+
+        onDialogueEnd?.Invoke();
     }
 }
