@@ -1718,6 +1718,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1656717199400178231, guid: 99c1d2c595e3e524cb891aa967887ae0, type: 3}
       propertyPath: m_RendererIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656717199400178231, guid: 99c1d2c595e3e524cb891aa967887ae0, type: 3}
+      propertyPath: m_Cameras.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2662980902453451194, guid: 99c1d2c595e3e524cb891aa967887ae0, type: 3}

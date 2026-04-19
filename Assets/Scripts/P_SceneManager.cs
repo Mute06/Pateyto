@@ -101,6 +101,11 @@ public class P_SceneManager : MonoBehaviour
 
     }
 
+    public bool IsLastScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex >= SceneManager.sceneCountInBuildSettings - 1;
+    }
+
     // ── Coroutines ───────────────────────────────────────────────
 
     private IEnumerator LoadNextLevelRoutine(float delay)

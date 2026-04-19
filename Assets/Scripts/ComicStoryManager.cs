@@ -218,6 +218,14 @@ public class ComicStoryManager : MonoBehaviour
     void EndComic()
     {
         Debug.Log("Çizgi roman hikayesi bitti!");
-        P_SceneManager.Instance.LoadNextLevel();
+        if (P_SceneManager.Instance.IsLastScene())
+        {
+            P_SceneManager.Instance.LoadLevelIndex(0); 
+        }
+        else
+        {
+            P_SceneManager.Instance.LoadNextLevel();
+        }
+        
     }
 }
